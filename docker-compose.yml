@@ -1,28 +1,25 @@
----
 services:
-    webserver:
-        image: php:8.2-apache
-        ports:
-            - "8080:80"
-        volumes:
-            - ./src/html:/var/www/html
-        depends_on:
-            - mysql
+  webserver:
+    image: php:8.2-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src/html:/var/www/html
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "rootpass"
+      MYSQL_DATABASE: "test_db"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: >
+        ["CMD-SHELL", "mysqladmin ping -h localhost -u root --password=$$MYSQL_ROOT_PASSWORD"]
 
-    mysql:
-        image: mysql:latest
-        environment:
-            MYSQL_ROOT_PASSWORD: "rootpass"
-            MYSQL_DATABASE: "test_db"
-        volumes:
-            - mysql_data:/var/lib/mysql
-        healthcheck:
-            test: >
-                ["CMD-SHELL", "mysqladmin ping -h localhost 
-                -u root --password=$$MYSQL_ROOT_PASSWORD"]
-            interval: 5s
-            timeout: 10s
-            retries: 3
-
+      interval: 5s
+      timeout: 10s
+      retries: 3
 volumes:
-    mysql_data:
+  mysql_data:

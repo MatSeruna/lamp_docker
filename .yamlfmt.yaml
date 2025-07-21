@@ -1,0 +1,11 @@
+---
+extends:
+  - default
+
+formatter:
+  type: basic
+  include_document_start: true
+  indent: 2
+  line_ending: crlf
+  line_length: 80
+  retain_line_breaks: true
