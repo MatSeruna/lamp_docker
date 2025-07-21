@@ -16,6 +16,11 @@ services:
             MYSQL_DATABASE: "test_db"
         volumes:
             - mysql_data:/var/lib/mysql
+        healthcheck:
+          test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --password=$$MYSQL_ROOT_PASSWORD"]
+          interval: 5s
+          timeout: 10s
+          retries: 3
 
-    volumes:
-        mysql_data:
+volumes:
+    mysql_data:
