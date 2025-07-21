@@ -1,0 +1,20 @@
+services:
+    webserver:
+        image: php:8.2-apache
+        ports:
+            - "8080:80"
+        volumes:
+            - ./html:/var/www/html
+        depends_on:
+            - mysql
+
+    mysql:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: "rootpass"
+            MYSQL_DATABASE: "test_db"
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
